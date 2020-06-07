@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, StyleSheet, Image, Text, SafeAreaView } from 'react-native';
+import { View, StyleSheet, Image, Text, SafeAreaView, Linking } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { Feather as Icon, FontAwesome } from '@expo/vector-icons';
 import { useNavigation, useRoute } from '@react-navigation/native';
@@ -47,6 +47,10 @@ const Detail = () => {
     navigation.goBack();
   }
 
+  function handleWhatsapp() {
+    Linking.openURL(`whatsapp://send?phone=${data.point.whatsapp}&text= Tenho interesse sobre coleta de resíduos`)
+  }
+
   function handleComposeMail() {
     MailComposer.composeAsync({
       subject: 'Interesse na coleta de resíduos',
@@ -72,7 +76,7 @@ const Detail = () => {
         </View>
       </View>
       <View style={styles.footer} >
-        <RectButton style={styles.button} onPress={() => {}}>
+        <RectButton style={styles.button} onPress={handleWhatsapp}>
           <FontAwesome name="whatsapp" size={20} color="#FFF" />
           <Text style={styles.buttonText}>Whatsapp</Text>
         </RectButton>
