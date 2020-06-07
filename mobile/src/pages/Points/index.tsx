@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, StyleSheet, Text, ScrollView } from 'react-native';
+import { View, StyleSheet, Text, ScrollView, Image } from 'react-native';
 import Constants from 'expo-constants';
 import { Feather as Icon } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
@@ -35,11 +35,17 @@ function handleNavigateBack() {
             }}
           >
             <Marker
+              style={styles.mapMarker}
               coordinate={{
                 latitude: -23.6449068,
                 longitude: -46.7461992,
               }}
-            />
+            >
+              <View style={styles.mapMarkerContainer}>
+                <Image style={styles.mapMarkerImage} source={{ uri: "https://images.unsplash.com/photo-1498579397066-22750a3cb424?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=400&q=60" }}/>
+                <Text style={styles.mapMarkerTitle}>Mercado</Text>
+              </View>
+            </Marker>
           </MapView>
         </View>
 
