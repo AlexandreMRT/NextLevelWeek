@@ -14,6 +14,10 @@ function handleNavigateBack() {
   navigation.goBack();
 }
 
+function handleNavigateToDetail() {
+  navigation.navigate('Detail');
+}
+
   return (
     <>
       <View style={styles.container} >
@@ -36,6 +40,7 @@ function handleNavigateBack() {
           >
             <Marker
               style={styles.mapMarker}
+              onPress={handleNavigateToDetail}
               coordinate={{
                 latitude: -23.6449068,
                 longitude: -46.7461992,
