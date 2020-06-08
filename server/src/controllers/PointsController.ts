@@ -18,7 +18,7 @@ class PointsController {
     const trx = await knex.transaction();
 
     const point = {
-      image: 'https://images.unsplash.com/photo-1498579397066-22750a3cb424?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=400&q=60',
+      image: req.file.filename,
       name,
       email,
       whatsapp,
@@ -32,7 +32,10 @@ class PointsController {
   
     const points_id = insertedIds[0];
   
-    const pointItems = items.map((item_id: number) => {
+    const pointItems = items
+      .split(',')
+      .map((item: string) => Number(item.trim()))
+      .map((item_id: number) => {
 
       return{
         item_id,
@@ -63,7 +66,12 @@ class PointsController {
       .where('point_items.point_id', id)
       .select('items.title');
 
-      return res.status(200).json({ point, items });
+      const serializePoint = {
+          ...point,
+          image_url: `http:192.168.0.250:3333/uploads/${point.image}`,
+      };
+
+      return res.status(200).json({ point: serializePoint, items });
   }
 
   async index(req: Request, res: Response) {
@@ -81,8 +89,14 @@ class PointsController {
       .distinct()
       .select('points.*');
 
-    return res.status(200).json(points)
+      const serializePoints = points.map(point => {
+        return {
+          ...point,
+          image_url: `http:192.168.0.250:3333/uploads/${point.image}`,
+        }
+      })
 
+    return res.status(200).json(serializePoints)
   }
 }
 
